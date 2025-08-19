@@ -1,10 +1,17 @@
+# facial_recognition_controller.py
 from flask import Blueprint, jsonify, request
-from app.services.facial_recognition_service import FacialRecognitionService
+from app.services.facial_recognition_service import FacialRecognitionService  # Solo importa la clase
 import cv2
 import base64
 import numpy as np
 
 facial_recognition_bp = Blueprint('facial_recognition', __name__)
+
+# Endpoint para iniciar el análisis de imágenes para el avatar
+@facial_recognition_bp.route('/process-avatar-images', methods=['GET'])
+def process_avatar_images():
+    result = FacialRecognitionService.analyze_images_for_avatar()
+    return jsonify({"message": result})
 
 # Endpoint para streaming en tiempo real
 @facial_recognition_bp.route('/stream', methods=['GET'])
